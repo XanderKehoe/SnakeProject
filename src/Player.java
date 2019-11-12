@@ -1,4 +1,5 @@
 import java.util.ListIterator;
+import java.util.Random;
 
 import org.lwjgl.glfw.GLFW;
 
@@ -7,6 +8,7 @@ import edu.utc.game.*;
 public class Player extends GameObject{
 	
 	public Dir dir = Dir.UP;
+	public Dir lastDir = Dir.DOWN;
 	int length = 0;
 	
 	public Player() {
@@ -50,18 +52,23 @@ public class Player extends GameObject{
 			hitbox.x += Main.blockSize;
 			break;
 		}
+		
+		SnakeGame.moveSound.play();
+		
+		lastDir = dir;
 	}
 	
 	public void eat() {
 		SnakeGame.food.newRandPos();
 		length++;
+		SnakeGame.eatSound.play();
 	}
 	
 	public void checkInput() {
-		 if (Main.ui.keyPressed(GLFW.GLFW_KEY_UP) && dir != Dir.DOWN) dir = Dir.UP;
-		 else if (Main.ui.keyPressed(GLFW.GLFW_KEY_DOWN) && dir != Dir.UP) dir = Dir.DOWN;
-		 else if (Main.ui.keyPressed(GLFW.GLFW_KEY_LEFT) && dir != Dir.RIGHT) dir = Dir.LEFT;
-		 else if (Main.ui.keyPressed(GLFW.GLFW_KEY_RIGHT) && dir != Dir.LEFT) dir = Dir.RIGHT;
+		 if (Main.ui.keyPressed(GLFW.GLFW_KEY_UP) && dir != Dir.DOWN && lastDir != Dir.DOWN) dir = Dir.UP;
+		 else if (Main.ui.keyPressed(GLFW.GLFW_KEY_DOWN) && dir != Dir.UP && lastDir != Dir.UP) dir = Dir.DOWN;
+		 else if (Main.ui.keyPressed(GLFW.GLFW_KEY_LEFT) && dir != Dir.RIGHT && lastDir != Dir.RIGHT) dir = Dir.LEFT;
+		 else if (Main.ui.keyPressed(GLFW.GLFW_KEY_RIGHT) && dir != Dir.LEFT && lastDir != Dir.LEFT) dir = Dir.RIGHT;
 	}
 	
 	public boolean checkFoodCollision() {

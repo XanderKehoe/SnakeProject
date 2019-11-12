@@ -2,9 +2,12 @@ import java.util.LinkedList;
 import java.util.ListIterator;
 import java.util.Random;
 
+import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 
 import edu.utc.game.Scene;
+import edu.utc.game.Sound;
+import edu.utc.game.Text;
 
 public class SnakeGame implements Scene {
 	
@@ -12,13 +15,19 @@ public class SnakeGame implements Scene {
 	public static Food food;
 	
 	public static LinkedList<Tail> tailList = new LinkedList<Tail>();
-	int victoryLength;
+	
+	int victoryScore;
 	
 	int timer = 0;
 	int timerMax;
 	
+	static Sound eatSound = new Sound("res/eat.wav");
+	static Sound moveSound = new Sound("res/move.wav");
+	
+	Text scoreText = new Text(0, 0, 40, 40, "Score: "+(tailList.size()+1));
+	
 	public SnakeGame(int frameTime) {
-		victoryLength = Main.gridWidth * Main.gridHeight;
+		victoryScore = Main.gridWidth * Main.gridHeight;
 		
 		player = new Player();
     	
@@ -26,6 +35,21 @@ public class SnakeGame implements Scene {
     	food = new Food(randCoords[0], randCoords[1]);
     	
     	timerMax = frameTime;
+	}
+	
+	public SnakeGame() {
+		
+	}
+	
+	public SnakeGame(Player p, LinkedList<Tail> tailList, Food food, int timerMax) {
+		victoryScore = Main.gridWidth * Main.gridHeight;
+		
+		this.player = p;
+		this.tailList = tailList;
+    	
+    	this.food = food;
+    	
+    	this.timerMax = timerMax;
 	}
 
 	@Override
@@ -56,6 +80,16 @@ public class SnakeGame implements Scene {
     	player.update();
     	for (Tail t : tailList)
     		t.draw();
+    	
+    	scoreText = new Text(0, 0, 40, 40, "Score: "+(player.length+1));
+    	scoreText.draw();
+    	
+    	if (player.length+ 1 >= victoryScore) {
+    		System.out.println("VICTORY" + (player.length + 1) + " | "+victoryScore);
+    	}
+    	else if (Main.ui.keyPressed(GLFW.GLFW_KEY_SPACE))
+    		return new Pause(this);
+
     	
         return this;
 	}

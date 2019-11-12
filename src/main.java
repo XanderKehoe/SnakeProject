@@ -25,14 +25,14 @@ public class Main extends Game implements Scene {
 	static Menu g;
 	
 	static final int blockSize = 30;
-	static final int gridWidth = 5;
-	static final int gridHeight = 5;
+	static final int gridWidth = 15;
+	static final int gridHeight = 15;
+	
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
 		
-		g = new Menu(gridWidth * blockSize, gridHeight * blockSize);
+		g = new Menu(gridWidth * blockSize, gridHeight * blockSize, true);
 		g.gameLoop();
 		
 		System.exit(0);

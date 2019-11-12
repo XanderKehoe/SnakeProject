@@ -1,8 +1,8 @@
 import edu.utc.game.Scene;
 
-public class Victory implements Scene {
+public class EndOfGame implements Scene {
 	
-	public Victory() {
+	public EndOfGame(boolean victory) {
 		
 	}
 
