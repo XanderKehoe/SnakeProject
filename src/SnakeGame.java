@@ -35,10 +35,7 @@ public class SnakeGame implements Scene {
     	food = new Food(randCoords[0], randCoords[1]);
     	
     	timerMax = frameTime;
-	}
-	
-	public SnakeGame() {
-		
+    	tailList.clear();
 	}
 	
 	public SnakeGame(Player p, LinkedList<Tail> tailList, Food food, int timerMax) {
@@ -64,7 +61,7 @@ public class SnakeGame implements Scene {
     		{
     			Tail thisTail = tailIterator.next();
     			if (thisTail.getHitbox().intersects(player.getHitbox()))
-    				System.out.println("GAME OVER");
+    				return new EndOfGame(false);
     			if (thisTail.life <= 0)
     				tailIterator.remove();
     			else
@@ -85,7 +82,7 @@ public class SnakeGame implements Scene {
     	scoreText.draw();
     	
     	if (player.length+ 1 >= victoryScore) {
-    		System.out.println("VICTORY" + (player.length + 1) + " | "+victoryScore);
+    		return new EndOfGame(true);
     	}
     	else if (Main.ui.keyPressed(GLFW.GLFW_KEY_SPACE))
     		return new Pause(this);
