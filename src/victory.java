@@ -1,8 +1,8 @@
 import edu.utc.game.Scene;
 
-public class victory implements Scene {
+public class Victory implements Scene {
 	
-	public victory() {
+	public Victory() {
 		
 	}
 
