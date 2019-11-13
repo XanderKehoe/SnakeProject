@@ -25,8 +25,8 @@ public class Main extends Game implements Scene {
 	static Menu g;
 	
 	static final int blockSize = 30;
-	static final int gridWidth = 15;
-	static final int gridHeight = 15;
+	static final int gridWidth = 23;
+	static final int gridHeight = 18;
 	
 
 	public static void main(String[] args) {
@@ -39,7 +39,6 @@ public class Main extends Game implements Scene {
 
 	}
 
-	@Override
 	public Scene drawFrame(int delta) {
 		// TODO Auto-generated method stub
 		return null;

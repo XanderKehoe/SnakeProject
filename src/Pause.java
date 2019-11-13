@@ -23,7 +23,6 @@ public class Pause implements Scene{
 		menuP.select(0);
 	}
 
-	@Override
 	public Scene drawFrame(int delta) {
 		// TODO Auto-generated method stub
 		return menuP;

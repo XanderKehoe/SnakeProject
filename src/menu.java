@@ -51,7 +51,6 @@ public class Menu extends Game implements Scene{
 
 	}
 
-	@Override
 	public Scene drawFrame(int delta) {
 		// TODO Auto-generated method stub
 		return menuG;
