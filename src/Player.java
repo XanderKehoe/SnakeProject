@@ -11,13 +11,38 @@ public class Player extends GameObject{
 	public Dir lastDir = Dir.DOWN;
 	int length = 0;
 	
-	public Player() {
+	boolean player1;
+	
+	public Player(boolean player1) {
 		hitbox.x = (int) ((Main.gridWidth / 2) * Main.blockSize);
 		hitbox.y = (int) ((Main.gridHeight / 2) * Main.blockSize);
 		hitbox.width = Main.blockSize - 1;
 		hitbox.height = Main.blockSize - 1;
 		
-		setColor(0, 1, 0);
+		if (player1){
+			setColor(0, 1, 0);
+			this.player1 = true;
+		}
+		else{
+			setColor(0, 0, 1);
+			this.player1 = false;
+		}
+	}
+	
+	public Player(int gridX, int gridY, boolean player1) {
+		hitbox.x = (int) (gridX * Main.blockSize);
+		hitbox.y = (int) (gridY * Main.blockSize);
+		hitbox.width = Main.blockSize - 1;
+		hitbox.height = Main.blockSize - 1;
+		
+		if (player1){
+			setColor(0, 1, 0);
+			this.player1 = true;
+		}
+		else{
+			setColor(0, 0, 1);
+			this.player1 = false;
+		}
 	}
 	
 	public void update() {
@@ -32,7 +57,7 @@ public class Player extends GameObject{
 			//System.out.p
 		
 		if (length > 0) 
-			SnakeGame.tailList.add(new Tail((int) (hitbox.x / 30), (int) (hitbox.y / 30), length)); 
+			SnakeGame.tailList.add(new Tail((int) (hitbox.x / 30), (int) (hitbox.y / 30), length, player1)); 
 	}
 	
 	public void move() {
@@ -65,10 +90,18 @@ public class Player extends GameObject{
 	}
 	
 	public void checkInput() {
-		 if (Main.ui.keyPressed(GLFW.GLFW_KEY_UP) && dir != Dir.DOWN && lastDir != Dir.DOWN) dir = Dir.UP;
-		 else if (Main.ui.keyPressed(GLFW.GLFW_KEY_DOWN) && dir != Dir.UP && lastDir != Dir.UP) dir = Dir.DOWN;
-		 else if (Main.ui.keyPressed(GLFW.GLFW_KEY_LEFT) && dir != Dir.RIGHT && lastDir != Dir.RIGHT) dir = Dir.LEFT;
-		 else if (Main.ui.keyPressed(GLFW.GLFW_KEY_RIGHT) && dir != Dir.LEFT && lastDir != Dir.LEFT) dir = Dir.RIGHT;
+		if (player1){
+			if (Main.ui.keyPressed(GLFW.GLFW_KEY_UP) && dir != Dir.DOWN && lastDir != Dir.DOWN) dir = Dir.UP;
+			else if (Main.ui.keyPressed(GLFW.GLFW_KEY_DOWN) && dir != Dir.UP && lastDir != Dir.UP) dir = Dir.DOWN;
+			else if (Main.ui.keyPressed(GLFW.GLFW_KEY_LEFT) && dir != Dir.RIGHT && lastDir != Dir.RIGHT) dir = Dir.LEFT;
+			else if (Main.ui.keyPressed(GLFW.GLFW_KEY_RIGHT) && dir != Dir.LEFT && lastDir != Dir.LEFT) dir = Dir.RIGHT;
+		}
+		else{
+			if (Main.ui.keyPressed(GLFW.GLFW_KEY_W) && dir != Dir.DOWN && lastDir != Dir.DOWN) dir = Dir.UP;
+			else if (Main.ui.keyPressed(GLFW.GLFW_KEY_S) && dir != Dir.UP && lastDir != Dir.UP) dir = Dir.DOWN;
+			else if (Main.ui.keyPressed(GLFW.GLFW_KEY_A) && dir != Dir.RIGHT && lastDir != Dir.RIGHT) dir = Dir.LEFT;
+			else if (Main.ui.keyPressed(GLFW.GLFW_KEY_D) && dir != Dir.LEFT && lastDir != Dir.LEFT) dir = Dir.RIGHT;
+		}
 	}
 	
 	public boolean checkFoodCollision() {

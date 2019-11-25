@@ -38,7 +38,8 @@ public class Food extends GameObject{
 			}
 			
 			//check for collision with player
-			if (SnakeGame.player.getHitbox().intersects(newHitBox))
+			if (SnakeGame.player1.getHitbox().intersects(newHitBox)
+			||  SnakeGame.player2.getHitbox().intersects(newHitBox))
 				collides = true;
 		}
 		

@@ -11,7 +11,8 @@ import edu.utc.game.Text;
 
 public class SnakeGame implements Scene {
 	
-	public static Player player;
+	public static Player player1;
+	public static Player player2;
 	public static Food food;
 	
 	public static LinkedList<Tail> tailList = new LinkedList<Tail>();
@@ -29,7 +30,8 @@ public class SnakeGame implements Scene {
 	public SnakeGame(int frameTime) {
 		victoryScore = Main.gridWidth * Main.gridHeight;
 		
-		player = new Player();
+		player1 = new Player(3, 3, true);
+		player2 = new Player(Main.gridWidth - 3, Main.gridHeight - 3, false);
     	
     	int[] randCoords = getRandGridXY();
     	food = new Food(randCoords[0], randCoords[1]);
@@ -38,10 +40,11 @@ public class SnakeGame implements Scene {
     	tailList.clear();
 	}
 	
-	public SnakeGame(Player p, LinkedList<Tail> tailList, Food food, int timerMax) {
+	public SnakeGame(Player p1, Player p2, LinkedList<Tail> tailList, Food food, int timerMax) {
 		victoryScore = Main.gridWidth * Main.gridHeight;
 		
-		this.player = p;
+		this.player1 = p1;
+		this.player2 = p2;
 		this.tailList = tailList;
     	
     	this.food = food;
@@ -53,13 +56,16 @@ public class SnakeGame implements Scene {
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 		
     	if (timer > timerMax) {
-    		player.move();
+    		player1.move();
+    		player2.move();
     		
     		ListIterator<Tail> tailIterator = (ListIterator<Tail>) tailList.iterator();
     		while (tailIterator.hasNext())
     		{
     			Tail thisTail = tailIterator.next();
-    			if (thisTail.getHitbox().intersects(player.getHitbox()))
+    			if (thisTail.getHitbox().intersects(player1.getHitbox()))
+    				return new EndOfGame(false);
+    			else if (thisTail.getHitbox().intersects(player2.getHitbox()))
     				return new EndOfGame(false);
     			if (thisTail.life <= 0)
     				tailIterator.remove();
@@ -73,17 +79,16 @@ public class SnakeGame implements Scene {
     		timer++;
     	
     	food.draw();
-    	player.update();
+    	player1.update();
+    	player2.update();
     	for (Tail t : tailList)
     		t.draw();
     	
-    	scoreText = new Text(0, 0, 40, 40, "Score: "+(player.length+1));
-    	scoreText.draw();
     	
-    	if (player.length+ 1 >= victoryScore) {
-    		return new EndOfGame(true);
-    	}
-    	else if (Main.ui.keyPressed(GLFW.GLFW_KEY_SPACE))
+    	//if (player.length+ 1 >= victoryScore) {
+    		//return new EndOfGame(true);
+    	//}
+    	if (Main.ui.keyPressed(GLFW.GLFW_KEY_SPACE))
     		return new Pause(this);
 
     	
