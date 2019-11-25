@@ -111,6 +111,13 @@ public class Player extends GameObject{
 			return false;
 	}
 	
+	public boolean outOfMap() {
+		if (getHitbox().x < 0 || getHitbox().x > Main.gridWidth * (Main.blockSize)
+		|| getHitbox().y < 0 || getHitbox().y > Main.gridHeight * (Main.blockSize))
+			return true;
+		return false;
+	}
+	
 	/*
 	public boolean checkTailCollision() {
 		boolean collision = false;

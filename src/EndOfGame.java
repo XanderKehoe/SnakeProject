@@ -14,17 +14,25 @@ public class EndOfGame implements Scene {
 	Sound victorysong;
 	Sound defeatsong;
 	
-	public EndOfGame(boolean victory) {
-		if (victory) {
-			text = new Text(Main.ui.getWidth() / 2 - 50, 20, 30, 20, "VICTORY!");
-			victorysong = new Sound("res/victorysong.wav");
-			victorysong.play();
+	public EndOfGame(boolean player1) {
+		//if (victory) {
+		if (player1)
+			text = new Text(Main.ui.getWidth() / 2 - 150, 20, 30, 20, "player 1 has won!");
+		else {
+			text = new Text(Main.ui.getWidth() / 2 - 150, 20, 30, 20, "player 2 has won!");
 		}
+		
+		victorysong = new Sound("res/victorysong.wav");
+		victorysong.play();
+		
+		//}
+		/*
 		else {
 			text = new Text(Main.ui.getWidth() / 2 - 50, 20, 30, 20, "DEFEAT");
 			defeatsong = new Sound("res/defeatsong.wav");
 			defeatsong.play();
 		}
+		*/
 	}
 
 	public Scene drawFrame(int delta) {

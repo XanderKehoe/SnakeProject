@@ -42,7 +42,7 @@ public class Menu extends Game implements Scene{
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 		
 
-		menuG = new SimpleMenu(Game.ui.getWidth() / 2 - 50, 10, 30, 20, "Snake");
+		menuG = new SimpleMenu(Game.ui.getWidth() / 2 - 50, 10, 30, 20, "Snakey Duel");
 		menuG.addItem(new SimpleMenu.SelectableText(30, 40, 20, 20, "Start (easy)", 1, 0, 0, 1, 1, 1), new SnakeGame(60));
 		menuG.addItem(new SimpleMenu.SelectableText(30, 80, 20, 20, "Start (medium)", 1, 0, 0, 1, 1, 1), new SnakeGame(20));
 		menuG.addItem(new SimpleMenu.SelectableText(30, 120, 20, 20, "Start (hard)", 1, 0, 0, 1, 1, 1), new SnakeGame(10));

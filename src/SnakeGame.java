@@ -30,8 +30,8 @@ public class SnakeGame implements Scene {
 	public SnakeGame(int frameTime) {
 		victoryScore = Main.gridWidth * Main.gridHeight;
 		
-		player1 = new Player(3, 3, true);
-		player2 = new Player(Main.gridWidth - 3, Main.gridHeight - 3, false);
+		player1 = new Player(6, 6, true);
+		player2 = new Player(Main.gridWidth - 6, Main.gridHeight - 6, false);
     	
     	int[] randCoords = getRandGridXY();
     	food = new Food(randCoords[0], randCoords[1]);
@@ -66,7 +66,7 @@ public class SnakeGame implements Scene {
     			if (thisTail.getHitbox().intersects(player1.getHitbox()))
     				return new EndOfGame(false);
     			else if (thisTail.getHitbox().intersects(player2.getHitbox()))
-    				return new EndOfGame(false);
+    				return new EndOfGame(true);
     			if (thisTail.life <= 0)
     				tailIterator.remove();
     			else
@@ -88,6 +88,11 @@ public class SnakeGame implements Scene {
     	//if (player.length+ 1 >= victoryScore) {
     		//return new EndOfGame(true);
     	//}
+    	if (player1.outOfMap())
+    		return new EndOfGame(false);
+    	else if (player2.outOfMap())
+    		return new EndOfGame(true);
+    	
     	if (Main.ui.keyPressed(GLFW.GLFW_KEY_SPACE))
     		return new Pause(this);
 
