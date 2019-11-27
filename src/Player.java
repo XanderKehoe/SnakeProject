@@ -12,6 +12,7 @@ public class Player extends GameObject{
 	int length = 0;
 	
 	boolean player1;
+	Texture thisTexture;
 	
 	public Player(boolean player1) {
 		hitbox.x = (int) ((Main.gridWidth / 2) * Main.blockSize);
@@ -22,10 +23,12 @@ public class Player extends GameObject{
 		if (player1){
 			setColor(0, 1, 0);
 			this.player1 = true;
+			thisTexture = new Texture("res/greenhead.png");
 		}
 		else{
 			setColor(0, 0, 1);
 			this.player1 = false;
+			thisTexture = new Texture("res/bluehead.png");
 		}
 	}
 	
@@ -38,11 +41,18 @@ public class Player extends GameObject{
 		if (player1){
 			setColor(0, 1, 0);
 			this.player1 = true;
+			thisTexture = new Texture("res/greenhead.png");
 		}
 		else{
 			setColor(0, 0, 1);
 			this.player1 = false;
+			thisTexture = new Texture("res/bluehead.png");
 		}
+	}
+	
+	public void draw() {
+		if (thisTexture != null)
+			thisTexture.draw(this);
 	}
 	
 	public void update() {
